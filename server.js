@@ -2,6 +2,8 @@ const { sequelize } = require("./models/models");
 const http = require("http");
 const app = require("./app");
 
+const PORT = process.env.PORT || 5000;
+
 const server = http.createServer(app);
 
 async function startServer() {
@@ -12,3 +14,5 @@ async function startServer() {
     console.log(`Server running on port ${PORT}`);
   });
 }
+
+startServer();
