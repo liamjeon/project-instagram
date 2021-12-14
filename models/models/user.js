@@ -9,19 +9,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.user;
+      this.hasMany(models.Comment, { foreignKey: "userId" });
     }
   }
   User.init(
     {
-      username: DataTypes.STRING,
-      fullname: DataTypes.STRING,
-      password: DataTypes.STRING,
-      email: DataTypes.STRING,
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      fullname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      follower: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      following: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
       modelName: "User",
+      tableName: "users",
     }
   );
   return User;

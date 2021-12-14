@@ -1,22 +1,22 @@
 {
   "development": {
     "username": "root",
-    "password": "mysql!@34",
-    "database": "instagram",
+    "password": "roejddl1",
+    "database": "instagram_dev",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "roejddl1",
+    "database": "instagram_tes",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
+    "password": "roejddl1",
+    "database": "instagram_pro",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

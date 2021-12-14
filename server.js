@@ -6,13 +6,14 @@ const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(app);
 
-async function startServer() {
-  // await sequelize.sync({ force: true });
-  await sequelize.sync();
+// await sequelize.sync({ force: true });
+// await sequelize.sync();
 
-  server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+sequelize
+  .sync({ force: true })
+  .then(() => console.log("DB 연결 성공"))
+  .catch((err) => console.log(err));
 
-startServer();
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
