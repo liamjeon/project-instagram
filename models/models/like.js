@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ post, user }) {
+    static associate({ Post, User }) {
       // define association here
-      this.belongsTo(post);
-      this.belongsTo(user);
+      this.belongsTo(Post);
+      this.belongsTo(User);
     }
   }
   like.init(
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "like",
+      modelName: "Like",
     }
   );
   return like;
