@@ -1,15 +1,65 @@
-const CommentRepository = require('./comment.data.js')
+const CommentRepository = require("./comment.data.js");
+const commentRepository = new CommentRepository();
 
 class CommentController {
-  async createComment(req, res, next) {
-    const postId = req.params.postId;
-    const { content } = req.body;
-    const username = "테스트아이디";
+  async htmlCreateComment(req, res, next) {
+    // const postId = req.params.postId;
+    const postId = 1;
+    // const { content } = req.body;
+    const content = "댓글내용";
+    const username = "유저네임";
+    const userId = 1;
 
     try {
-      const result = await CommentRepository.create(postId, content, username);
+      const result = await commentRepository.create(
+        userId,
+        postId,
+        username,
+        content
+      );
       console.log(result);
       return res.sendStatus(201);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  }
+
+  async htmlGetComments(req, res, next) {
+    const postId = req.params.postId;
+    // const postId = 1;
+
+    try {
+      const result = await commentRepository.getByPostId(postId);
+      console.log(result);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  }
+
+  async htmlUpdateComment(req, res, next) {
+    const commentId = req.params.commentId;
+    const content = req.body.content;
+
+    try {
+      const result = await commentRepository.updateByCommentId(
+        commentId,
+        content
+      );
+      console.log(result);
+      return res.sendStatus(201);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  }
+
+  async htmlDeleteComment(req, res, next) {
+    const commentId = req.params.commentId;
+
+    try {
+      const result = await commentRepository.removeByCommentId(commentId);
+      console.log(result);
+      return res.sendStatus(200);
     } catch (error) {
       return res.sendStatus(404);
     }

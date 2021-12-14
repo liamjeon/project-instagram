@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use("/api/posts", commentRouter);
-app.use('/api/posts', postRouter)
+// app.use('/api/posts', postRouter)
 
 
 //예외 처리
