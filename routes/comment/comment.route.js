@@ -1,7 +1,7 @@
 const express = require("express");
 const CommentController = require("../comment/comment.controller.js");
 const commentController = new CommentController();
-// import isAuth from "../middleware/auth.js";
+const isAuth = require('../../middlewares/auth.middleware.js');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/:postId/comment", commentController.htmlGetComments);
 
 //POST /comment
-router.post("/:postId/comment", commentController.htmlCreateComment);
+router.post("/:postId/comment", isAuth, commentController.htmlCreateComment);
 
 //PUT /comment/:commentId
 router.put("/:postId/comment/:commentId", commentController.htmlUpdateComment);

@@ -8,7 +8,7 @@ class CommentController {
     // const { content } = req.body;
     const content = "댓글내용";
     const username = "유저네임";
-    const userId = 1;
+    const userId = req.user.id;
 
     try {
       const result = await commentRepository.create(
