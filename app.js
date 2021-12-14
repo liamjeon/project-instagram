@@ -1,10 +1,12 @@
 const express = require("express");
 const commentRouter = require("./routes/comment/comment.route.js")
+const postRouter = require("./routes/post/post.route.js")
 
 const app = express();
 
 app.use(express.json());
 app.use("/api/posts", commentRouter);
+app.use('/api/posts', postRouter)
 
 
 //예외 처리

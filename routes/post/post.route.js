@@ -11,7 +11,7 @@ const {
 postRouter.get("/", httpGetAllPosts);
 // add post to db
 postRouter.post("/:postId", httpAddPost);
-// edit post
+// edit posts
 postRouter.put("/", httpEditPost);
 //delete post
 postRouter.delete("/:postId", httpDeletePost);

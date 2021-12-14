@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ User, like }) {
       // define association here
-      this.belongsTo( User);
+      this.belongsTo(User);
       this.hasMany(like);
     }
   }

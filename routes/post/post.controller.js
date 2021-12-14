@@ -15,18 +15,20 @@ async function httpGetAllPosts(req, res) {
 }
 
 async function httpAddPost(req, res) {
-  const { content } = req.body;
+  // const { content } = req.body;
   //  when Multer is ready
-  const { imgUrl } = req.file.path;
+  // const { imgUrl } = req.file.path;
   //  when passport is ready
-  const { id } = req.user;
+  // const { id } = req.user;
 
-  if (!content) return res.status(400);
+  // if (!content) return res.status(400);
 
   const newPost = post.create({
-    content: content,
-    imgUrl: imgUrl,
-    userId: id,
+    userLiked: "userLiked",
+    username : "username",
+    content: "content",
+    imgUrl: "imgUrl",
+    UserId: 1,
   });
 
   return res.status(201).json(newPost);
@@ -39,8 +41,6 @@ async function httpEditPost(req, res) {
   const { imgUrl } = req.file.path;
   // when passport is ready
   const { id } = req.user;
-  
-  const existsPost 
 }
 
 async function httpDeletePost(req, res) {}
