@@ -4,11 +4,12 @@ const commentRepository = new CommentRepository();
 class CommentController {
   async htmlCreateComment(req, res, next) {
     // const postId = req.params.postId;
-    const postId = 1;
-    // const { content } = req.body;
-    const content = "댓글내용";
-    const username = "유저네임";
+    const { content } = req.body;
+    const { postId } = req.params;
+    const { username } = req.user;
     const userId = req.user.id;
+
+    console.log(content, postId, username, userId);
 
     try {
       const result = await commentRepository.create(
