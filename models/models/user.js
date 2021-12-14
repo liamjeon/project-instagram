@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // define association here
-      this.hasMany(models.Comment, { foreignKey: "userId" });
+      this.hasMany(models.Comment, {foreignKey: "userId"});
       // this.hasMany(models.post);
     }
   }
@@ -26,15 +26,15 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       follower: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       following: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {
