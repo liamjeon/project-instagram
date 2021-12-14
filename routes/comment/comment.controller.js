@@ -1,6 +1,6 @@
 const express = require("express");
 const CommentRepository = require("./comment.data.js");
-const commentRepository = new CommentRepository();
+const { Comment } = require("../../models/models");
 
 class CommentController {
   async createComment(req, res, next) {
@@ -11,7 +11,11 @@ class CommentController {
     console.log(req.params, content, username);
 
     try {
-      const result = await commentRepository.create(postId, username, content);
+      const result = await Comment.create({
+        UserId : 1,
+        content : '댓글',
+        username : '유저네임',
+      });
       console.log(result);
       return res.sendStatus(201);
     } catch (error) {
