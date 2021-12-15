@@ -10,9 +10,9 @@ const {
 // get all posts MAIN
 postRouter.get("/", httpGetAllPosts);
 // add post to db
-postRouter.post("/:postId", httpAddPost);
+postRouter.post("/", httpAddPost);
 // edit post
-postRouter.put("/", httpEditPost);
+postRouter.put("/:postId", httpEditPost);
 //delete post
 postRouter.delete("/:postId", httpDeletePost);
 //get detail?

@@ -1,15 +1,17 @@
-const { sequelize, post, user } = require("../../models/models");
+const { sequelize, Post, User } = require("../../models/models");
 
 async function httpGetAllPosts(req, res) {
   // When Passport is ready
   const { id } = req.user;
 
-  const currentUser = user.findOne({
+  const currentUser = User.findOne({
     where: {
       id: id,
     },
   });
-  const posts = await post.findAll({});
+  /* ------------------- comments? comment? binding ---------------------- */
+  const posts = await Post.findAll({ include: "comment" });
+  /* ------------------- comments? comment? binding ---------------------- */
 
   return res.json({ posts: posts, currentUser: currentUser });
 }
@@ -19,33 +21,90 @@ async function httpAddPost(req, res) {
   //  when Multer is ready
   const { imgUrl } = req.file.path;
   //  when passport is ready
-  const { id } = req.user;
+  const { id: userId, username } = req.user;
 
   if (!content) return res.status(400);
 
-  const newPost = post.create({
-    content: content,
-    imgUrl: imgUrl,
-    userId: id,
-  });
-
-  return res.status(201).json(newPost);
+  try {
+    const newPost = await Post.create({
+      username,
+      content,
+      imgUrl,
+      userId,
+    });
+    return res.status(201).json(newPost);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send();
+  }
 }
 
 async function httpEditPost(req, res) {
-  const {postId} = req.params;
+  const { postId } = req.params;
   const { content } = req.body;
   // when Multer is ready
-  const { imgUrl } = req.file.path;
-  // when passport is ready
-  const { id } = req.user;
-  
-  const existsPost 
+  const { imgUrl } = req.file.path; //location????
+  // // when passport is ready
+  const { id: userId } = req.user;
+  try {
+    const existingPost = await Post.findOne({
+      where: {
+        id: postId,
+        userId,
+      },
+    });
+    existsPost.set({
+      content,
+      imgUrl,
+    });
+
+    const updatedPost = await existingPost.save();
+
+    res.status(201).json(updatedPost);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send();
+  }
 }
 
-async function httpDeletePost(req, res) {}
+async function httpDeletePost(req, res) {
+  const { postId } = req.params;
+  // When passport is ready
+  const { id: userId } = req.user;
+  try {
+    const existingPost = await Post.findOne({
+      where: {
+        id: postId,
+        userId,
+      },
+    });
 
-async function httpGetOnePost(req, res) {}
+    await existingPost.destroy();
+  } catch (err) {
+    console.log(err);
+    res.status(400).send();
+  }
+}
+
+async function httpGetOnePost(req, res) {
+  const { postId } = req.params;
+  //when passport is ready
+  const { id: userId } = req.user;
+
+  try {
+    const post = Post.findOne({
+      where: {
+        id: postId,
+        userId,
+      },
+    });
+
+    return res.status(200).json(post);
+  } catch (err) {
+    console.log(err);
+    return res.status(400);
+  }
+}
 module.exports = {
   httpGetAllPosts,
   httpAddPost,
