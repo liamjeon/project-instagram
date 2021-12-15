@@ -1,23 +1,66 @@
-const express = require("express");
 const CommentRepository = require("./comment.data.js");
-const { Comment } = require("../../models/models");
+const commentRepository = new CommentRepository();
 
 class CommentController {
-  async createComment(req, res, next) {
-    const postId = req.params.postId;
+  async htmlCreateComment(req, res, next) {
+    // const postId = req.params.postId;
     const { content } = req.body;
-    const username = "테스트아이디";
-    
-    console.log(req.params, content, username);
+    const { postId } = req.params;
+    const { username } = req.user;
+    const userId = req.user.id;
+
+    console.log(content, postId, username, userId);
 
     try {
-      const result = await Comment.create({
-        UserId : 1,
-        content : '댓글',
-        username : '유저네임',
-      });
+      const result = await commentRepository.create(
+        userId,
+        postId,
+        username,
+        content
+      );
       console.log(result);
       return res.sendStatus(201);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  }
+
+  async htmlGetComments(req, res, next) {
+    const postId = req.params.postId;
+    // const postId = 1;
+
+    try {
+      const result = await commentRepository.getByPostId(postId);
+      console.log(result);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  }
+
+  async htmlUpdateComment(req, res, next) {
+    const commentId = req.params.commentId;
+    const content = req.body.content;
+
+    try {
+      const result = await commentRepository.updateByCommentId(
+        commentId,
+        content
+      );
+      console.log(result);
+      return res.sendStatus(201);
+    } catch (error) {
+      return res.sendStatus(404);
+    }
+  }
+
+  async htmlDeleteComment(req, res, next) {
+    const commentId = req.params.commentId;
+
+    try {
+      const result = await commentRepository.removeByCommentId(commentId);
+      console.log(result);
+      return res.sendStatus(200);
     } catch (error) {
       return res.sendStatus(404);
     }
