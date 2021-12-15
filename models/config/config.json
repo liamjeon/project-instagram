@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "roejddl1",
-    "database": "instagram_dev",
+    "password": "mysql!@34",
+    "database": "instagram",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

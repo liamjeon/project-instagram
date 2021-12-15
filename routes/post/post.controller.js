@@ -1,25 +1,42 @@
+const req = require("express/lib/request");
 const { sequelize, Post, User } = require("../../models/models");
+const post = require("../../models/models/post");
+const user = require("../../models/models/user");
 
 async function httpGetAllPosts(req, res) {
   // When Passport is ready
   const { id } = req.user;
 
-  const currentUser = User.findOne({
+  const currentUser = await User.findOne({
     where: {
       id: id,
     },
   });
-  /* ------------------- comments? comment? binding ---------------------- */
-  const posts = await Post.findAll({ include: "comment" });
-  /* ------------------- comments? comment? binding ---------------------- */
 
-  return res.json({ posts: posts, currentUser: currentUser });
+  //like
+  const posts = await sequelize.query(
+    "SELECT *, (SELECT COUNT(*) FROM likes where postId = posts.id) AS numOfLikes, (SELECT COUNT(*) FROM comments where postId = posts.id) AS numOfComments FROM posts"
+  );
+
+  const likedPosts = await sequelize.query(
+    `SELECT postId FROM likes WHERE userId = ${currentUser.id}`
+  );
+
+  const likedPostList = likedPosts[0].map((post) => post.postId);
+
+  return res.json({
+    post: posts[0],
+    currentUserId: currentUser.id,
+    likedPostList,
+  });
 }
 
 async function httpAddPost(req, res) {
   const { content } = req.body;
   //  when Multer is ready
-  const { imgUrl } = req.file.path;
+  const imgUrl = req.file.path;
+  console.log(req.file.path);
+
   //  when passport is ready
   const { id: userId, username } = req.user;
 
@@ -43,7 +60,7 @@ async function httpEditPost(req, res) {
   const { postId } = req.params;
   const { content } = req.body;
   // when Multer is ready
-  const { imgUrl } = req.file.path; //location????
+  const imgUrl = req.file.path;
   // // when passport is ready
   const { id: userId } = req.user;
   try {
@@ -53,7 +70,7 @@ async function httpEditPost(req, res) {
         userId,
       },
     });
-    existsPost.set({
+    existingPost.set({
       content,
       imgUrl,
     });
@@ -80,6 +97,7 @@ async function httpDeletePost(req, res) {
     });
 
     await existingPost.destroy();
+    res.status(204).send();
   } catch (err) {
     console.log(err);
     res.status(400).send();
@@ -89,17 +107,20 @@ async function httpDeletePost(req, res) {
 async function httpGetOnePost(req, res) {
   const { postId } = req.params;
   //when passport is ready
-  const { id: userId } = req.user;
+  // const { id: userId } = req.user;
 
   try {
-    const post = Post.findOne({
-      where: {
-        id: postId,
-        userId,
-      },
-    });
+    const post = await sequelize.query(
+      `SELECT*,(SELECT COUNT(*) FROM likes where postId=${postId} ) AS numOfLikes,(SELECT COUNT(*) FROM comments where postId=${postId}) AS numOfComments FROM posts WHERE id = ${postId}`
+    );
 
-    return res.status(200).json(post);
+    // console.log(post[0].length);
+
+    if (post[0].length === 0) {
+      return res.status(404).send();
+    }
+
+    return res.status(200).json(post[0]);
   } catch (err) {
     console.log(err);
     return res.status(400);

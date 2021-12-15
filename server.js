@@ -9,7 +9,7 @@ const server = http.createServer(app);
 async function startServer() {
   // await sequelize.sync();
   await sequelize.sync({
-    force: false,
+    // force: true,
   });
   // await sequelize.authenticate();
 

@@ -24,5 +24,9 @@ const upload = multer({
     }
     cb("Give proper files format to upload");
   },
-}).single("image");
+});
 // when passport is ready
+
+module.exports = {
+  upload,
+};
