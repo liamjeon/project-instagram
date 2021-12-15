@@ -1,15 +1,19 @@
 const express = require("express");
-const cors = require("cors");
+const commentRouter = require("./routes/comment/comment.route.js")
 
 const app = express();
 
-const postRouter = require("./routes/post/post.route");
-
-app.use(express.urlencoded());
 app.use(express.json());
-// for Multer
-app.use("/Images", express.static("./Images"));
+app.use("/api/posts", commentRouter);
 
-app.use("/api/posts", postRouter);
+
+//예외 처리
+app.use((req, res, next) => {
+  res.sendStatus(404);
+});
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.sendStatus(500);
+});
 
 module.exports = app;
