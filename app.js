@@ -10,7 +10,6 @@ passportConfig();
 app.use(express.json());
 app.use(passport.initialize());
 
-
 app.use("/posts", commentRouter);
 app.use("/auth", userRouter);
 // app.use('/api/posts', postRouter)

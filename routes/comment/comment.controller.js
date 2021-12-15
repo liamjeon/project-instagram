@@ -10,9 +10,9 @@ class CommentController {
     const userId = req.user.id;
 
     console.log(content, postId, username, userId);
-
+//
     try {
-      const result = await commentRepository.create(
+      const result = await commentRepository.create(   
         userId,
         postId,
         username,
