@@ -9,7 +9,9 @@ async function httpGetAllPosts(req, res) {
       id: id,
     },
   });
-  const posts = await Post.findAll({});
+  /* ------------------- comments? comment? binding ---------------------- */
+  const posts = await Post.findAll({ include: "comment" });
+  /* ------------------- comments? comment? binding ---------------------- */
 
   return res.json({ posts: posts, currentUser: currentUser });
 }
