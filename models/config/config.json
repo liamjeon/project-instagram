@@ -2,21 +2,21 @@
   "development": {
     "username": "root",
     "password": "roejddl1",
-    "database": "instagram",
+    "database": "instagram_dev",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "root",
-    "database": "instagram",
+    "database": "instagram_dev",
     "host": "13.125.132.120",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": "root",
-    "database": "instagram",
+    "database": "instagram_pro",
     "host": "13.125.132.120",
     "dialect": "mysql"
   }

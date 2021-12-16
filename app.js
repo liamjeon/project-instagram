@@ -13,9 +13,7 @@ const app = express();
 passportConfig();
 
 app.use(express.json());
-app.use(cors({
-  // origin:['http//127.0.0.1:5000'];
-}));
+app.use(cors());
 app.use(passport.initialize());
 
 app.use("/posts", postRouter);
