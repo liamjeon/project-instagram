@@ -3,16 +3,13 @@ const commentRepository = new CommentRepository();
 
 class CommentController {
   async htmlCreateComment(req, res, next) {
-    // const postId = req.params.postId;
     const { content } = req.body;
     const { postId } = req.params;
-    const { username } = req.user;
+    const username = "req.user.username";
     const userId = req.user.id;
 
-    console.log(content, postId, username, userId);
-//
     try {
-      const result = await commentRepository.create(   
+      const result = await commentRepository.create(
         userId,
         postId,
         username,
@@ -27,7 +24,6 @@ class CommentController {
 
   async htmlGetComments(req, res, next) {
     const postId = req.params.postId;
-    // const postId = 1;
 
     try {
       const result = await commentRepository.getByPostId(postId);

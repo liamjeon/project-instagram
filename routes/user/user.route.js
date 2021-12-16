@@ -4,8 +4,6 @@ const UserController = require('./user.controller.js');
 
 const userController = new UserController();
 const router = express.Router();
-// loginId dup check api
-// router.post("/loginId", userController.checkLoginId);
 
 // signup api
 router.post("/signup", validateAuth, userController.signup);
