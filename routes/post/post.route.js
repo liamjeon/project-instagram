@@ -12,14 +12,9 @@ const {
 // get all posts MAIN
 postRouter.get("/", authenticateUser, httpGetAllPosts);
 // add post to db
-postRouter.post("/", authenticateUser, upload.single("imgUrl"), httpAddPost);
+postRouter.post("/", authenticateUser, upload.array("imgUrl", 5), httpAddPost);
 // edit post
-postRouter.put(
-  "/:postId",
-  authenticateUser,
-  upload.single("imgUrl"),
-  httpEditPost
-);
+postRouter.put("/:postId", authenticateUser, httpEditPost);
 //delete post
 postRouter.delete("/:postId", authenticateUser, httpDeletePost);
 //get detail?

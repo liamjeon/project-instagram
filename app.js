@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const passport = require("passport");
 const commentRouter = require("./routes/comment/comment.route.js");
 const userRouter = require("./routes/user/user.route.js");
@@ -11,6 +12,7 @@ passportConfig();
 
 app.use(express.json());
 app.use(passport.initialize());
+app.use("/Images", express.static(path.join(__dirname, "Images")));
 
 app.use("/posts", postRouter);
 app.use("/posts", commentRouter);

@@ -29,10 +29,12 @@ async function httpGetAllPosts(req, res) {
 }
 
 async function httpAddPost(req, res) {
+  const baseUrl = "http://13.125.132.120/";
+  // const baseUrl = "http://localhost:5000/";
   const { content } = req.body;
   //  when Multer is ready
-  const imgUrl = req.file.path;
-  console.log(req.file.path);
+  const imgs = req.files.map((file) => `${baseUrl}${file.path}`);
+  const imgUrl = imgs.join(",");
 
   //  when passport is ready
   const { id: userId, username } = req.user;
@@ -56,9 +58,7 @@ async function httpAddPost(req, res) {
 async function httpEditPost(req, res) {
   const { postId } = req.params;
   const { content } = req.body;
-  // when Multer is ready
-  const imgUrl = req.file.path;
-  // // when passport is ready
+
   const { id: userId } = req.user;
   try {
     const existingPost = await Post.findOne({
@@ -69,7 +69,6 @@ async function httpEditPost(req, res) {
     });
     existingPost.set({
       content,
-      imgUrl,
     });
 
     const updatedPost = await existingPost.save();
