@@ -1,7 +1,4 @@
-const req = require("express/lib/request");
-const { sequelize, Post, User } = require("../../models/models");
-const post = require("../../models/models/post");
-const user = require("../../models/models/user");
+const { sequelize, Post, User, Comment, Like } = require("../../models/models");
 
 async function httpGetAllPosts(req, res) {
   // When Passport is ready
@@ -13,9 +10,10 @@ async function httpGetAllPosts(req, res) {
     },
   });
 
-  //like
+  // (SELECT * FROM likes WHERE userId = ${id} ) AS liked
+  // , (SELECT postId FROM likes WHERE likes.userId = ${id})
   const posts = await sequelize.query(
-    "SELECT *, (SELECT COUNT(*) FROM likes where postId = posts.id) AS numOfLikes, (SELECT COUNT(*) FROM comments where postId = posts.id) AS numOfComments FROM posts"
+    `SELECT *, (SELECT COUNT(*) FROM likes WHERE postId = posts.id) AS numOfLikes, (SELECT COUNT(*) FROM comments WHERE postId = posts.id) AS numOfComments FROM posts`
   );
 
   const likedPosts = await sequelize.query(
@@ -26,7 +24,6 @@ async function httpGetAllPosts(req, res) {
 
   return res.json({
     post: posts[0],
-    currentUserId: currentUser.id,
     likedPostList,
   });
 }
@@ -106,21 +103,36 @@ async function httpDeletePost(req, res) {
 
 async function httpGetOnePost(req, res) {
   const { postId } = req.params;
-  //when passport is ready
-  // const { id: userId } = req.user;
+  const { id: userId } = req.user;
+  let liked;
 
   try {
     const post = await sequelize.query(
       `SELECT*,(SELECT COUNT(*) FROM likes where postId=${postId} ) AS numOfLikes,(SELECT COUNT(*) FROM comments where postId=${postId}) AS numOfComments FROM posts WHERE id = ${postId}`
     );
 
-    // console.log(post[0].length);
+    const comments = await Comment.findAll({
+      where: { postId },
+    });
+
+    const exsitingLike = await Like.findOne({
+      where: {
+        postId,
+        userId,
+      },
+    });
+
+    if (!exsitingLike) {
+      liked = false;
+    } else {
+      liked = true;
+    }
 
     if (post[0].length === 0) {
       return res.status(404).send();
     }
 
-    return res.status(200).json(post[0]);
+    return res.status(200).json({ post: post[0], liked, comments });
   } catch (err) {
     console.log(err);
     return res.status(400);

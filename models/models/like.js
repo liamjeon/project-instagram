@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Like.init(
     {
-      likes: DataTypes.BOOLEAN,
+      liked: DataTypes.BOOLEAN,
+      // defaultValue: true,
     },
     {
       sequelize,

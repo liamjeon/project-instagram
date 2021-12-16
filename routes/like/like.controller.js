@@ -16,6 +16,7 @@ async function httpToggleLikeMain(req, res) {
 
     const existstingLike = await Like.findOne({
       where: {
+        liked,
         postId,
         userId,
       },
