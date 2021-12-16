@@ -1,15 +1,21 @@
 const express = require("express");
+
 const passport = require("passport");
 const commentRouter = require("./routes/comment/comment.route.js");
 const userRouter = require("./routes/user/user.route.js");
 const postRouter = require("./routes/post/post.route");
 const likeRouter = require("./routes/like/like.route.js");
 const passportConfig = require("./passport/index.js");
+const cors = require('cors');
+
 
 const app = express();
 passportConfig();
 
 app.use(express.json());
+app.use(cors({
+  // origin:['http//127.0.0.1:5000'];
+}));
 app.use(passport.initialize());
 
 app.use("/posts", postRouter);
