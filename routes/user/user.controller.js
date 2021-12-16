@@ -13,7 +13,7 @@ class UserController {
     const saltOrRounds = 10;
 
     const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-    const isUser = await userRepository.findByUsername(username);
+    const isUser = await userRepository.findByEmail(email);
 
     if (isUser) {
       return res.status(400).json("이미 등록된 유저가 있습니다");
