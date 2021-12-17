@@ -29,8 +29,9 @@ async function httpGetAllPosts(req, res) {
 }
 
 async function httpAddPost(req, res) {
-  const baseUrl = "http://13.125.132.120/";
-  // const baseUrl = "http://localhost:5000/";
+  console.log(req);
+  // const baseUrl = "http://13.125.132.120/";
+  const baseUrl = "http://localhost:5000/";
   const { content } = req.body;
   //  when Multer is ready
   const imgs = req.files.map((file) => `${baseUrl}${file.path}`);
