@@ -2,13 +2,13 @@ const express = require("express");
 const { Comment } = require("../../models/models");
 
 class CommentRepository {
-  async create(userId, postId, username, content) {
-    console.log(userId, postId, username, content);
+  async create(userId, postId, username, content, profileUrl) {
     return Comment.create({
       userId,
       postId,
       content,
       username,
+      profileUrl,
     }).then((result) => {
       console.log(result);
     });
