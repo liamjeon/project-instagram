@@ -17,7 +17,7 @@ postRouter.post("/", authenticateUser, upload.array("imgUrl", 5), httpAddPost);
 postRouter.put("/:postId", authenticateUser, httpEditPost);
 //delete post
 postRouter.delete("/:postId", authenticateUser, httpDeletePost);
-//get detail?
+//get detail
 postRouter.get("/:postId", authenticateUser, httpGetOnePost);
 
 module.exports = postRouter;

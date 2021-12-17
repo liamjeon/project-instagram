@@ -13,7 +13,7 @@ async function httpGetAllPosts(req, res) {
   // (SELECT * FROM likes WHERE userId = ${id} ) AS liked
   // , (SELECT postId FROM likes WHERE likes.userId = ${id})
   const posts = await sequelize.query(
-    `SELECT *, (SELECT COUNT(*) FROM likes WHERE postId = posts.id) AS numOfLikes, (SELECT COUNT(*) FROM comments WHERE postId = posts.id) AS numOfComments FROM posts`
+    `SELECT *, (SELECT COUNT(*) FROM likes WHERE postId = posts.id) AS numOfLikes, (SELECT COUNT(*) FROM comments WHERE postId = posts.id) AS numOfComments FROM posts ORDER BY createdAt DESC`
   );
 
   const likedPosts = await sequelize.query(
@@ -29,8 +29,9 @@ async function httpGetAllPosts(req, res) {
 }
 
 async function httpAddPost(req, res) {
-  const baseUrl = "http://13.125.132.120/";
-  // const baseUrl = "http://localhost:5000/";
+  console.log(req);
+  // const baseUrl = "http://13.125.132.120/";
+  const baseUrl = "http://localhost:5000/";
   const { content } = req.body;
   //  when Multer is ready
   const imgs = req.files.map((file) => `${baseUrl}${file.path}`);
