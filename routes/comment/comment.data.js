@@ -9,8 +9,6 @@ class CommentRepository {
       content,
       username,
       profileUrl,
-    }).then((result) => {
-      console.log(result);
     });
   }
 

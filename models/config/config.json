@@ -7,8 +7,8 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "liam",
-    "password": "liam",
+    "username": "root",
+    "password": "root",
     "database": "instagram_dev",
     "host": "13.125.132.120",
     "dialect": "mysql"
