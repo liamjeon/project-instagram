@@ -54,7 +54,7 @@ class UserController {
         const token = jwt.sign({ id: user.id }, JWT_SECRETKEY, {
           expiresIn: JWT_EXPRIERSDAYS,
         });
-        return res.status(200).json({ token, username: user.username });
+        return res.status(200).json({ token, username: user.username, fullname: user.fullname});
       });
     })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙임
   }
