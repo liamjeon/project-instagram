@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: false,
       },
+      profileUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       follower: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -38,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      
     },
     {
       sequelize,
