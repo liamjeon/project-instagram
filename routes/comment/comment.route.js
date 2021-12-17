@@ -6,15 +6,15 @@ const isAuth = require('../../middlewares/auth.middleware.js');
 const router = express.Router();
 
 //GET /comment/:itemId
-router.get("/:postId/comment",isAuth, commentController.htmlGetComments);
+router.get("/:postId/comments",isAuth, commentController.htmlGetComments);
 
 //POST /comment
-router.post("/:postId/comment",isAuth, commentController.htmlCreateComment);
+router.post("/:postId/comments",isAuth, commentController.htmlCreateComment);
 
 //PUT /comment/:commentId
-router.put("/:postId/comment/:commentId",isAuth, commentController.htmlUpdateComment);
+router.put("/:postId/comments/:commentId",isAuth, commentController.htmlUpdateComment);
 
 //DELETE /comment/:commentId
-router.delete("/:postId/comment/:commentId",isAuth, commentController.htmlDeleteComment);
+router.delete("/:postId/comments/:commentId",isAuth, commentController.htmlDeleteComment);
 
 module.exports =  router;
