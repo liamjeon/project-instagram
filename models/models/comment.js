@@ -19,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      profileUrl: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      }
     },
     {
       sequelize,
