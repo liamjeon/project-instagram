@@ -111,9 +111,11 @@ async function httpGetOnePost(req, res) {
       `SELECT*,(SELECT COUNT(*) FROM likes where postId=${postId} ) AS numOfLikes,(SELECT COUNT(*) FROM comments where postId=${postId}) AS numOfComments FROM posts WHERE id = ${postId}`
     );
 
-    const comments = await Comment.findAll({
-      where: { postId },
-    });
+    const comments = await sequelize.query(
+      `SELECT *,(SELECT profileUrl FROM users Where id = comments.userId) AS profileUrl FROM comments`
+    );
+
+    console.log(comments[0]);
 
     const exsitingLike = await Like.findOne({
       where: {
@@ -132,7 +134,9 @@ async function httpGetOnePost(req, res) {
       return res.status(404).send();
     }
 
-    return res.status(200).json({ post: post[0], liked, comments });
+    return res
+      .status(200)
+      .json({ post: post[0], liked, comments: comments[0] });
   } catch (err) {
     console.log(err);
     return res.status(400);
