@@ -18,7 +18,7 @@ class CommentController {
         profileUrl
       );
       console.log(result);
-      return res.sendStatus(201);
+      return res.status(201).send(result);
     } catch (error) {
       return res.sendStatus(404);
     }

@@ -11,7 +11,6 @@ async function httpToggleLikeMain(req, res) {
         id: postId,
       },
     });
-
     if (!exisitingPost) return res.status(400).send();
 
     const existstingLike = await Like.findOne({
@@ -35,7 +34,7 @@ async function httpToggleLikeMain(req, res) {
 
     return res.status(204).send();
   } catch (err) {
-    console.log(err);
+    return res.sendStatus(400);
   }
 }
 
