@@ -112,10 +112,8 @@ async function httpGetOnePost(req, res) {
     );
 
     const comments = await sequelize.query(
-      `SELECT *,(SELECT profileUrl FROM users Where id = comments.userId) AS profileUrl FROM comments`
+      `SELECT *,(SELECT profileUrl FROM users WHERE id = comments.userId) AS profileUrl FROM comments`
     );
-
-    console.log(comments[0]);
 
     const exsitingLike = await Like.findOne({
       where: {
