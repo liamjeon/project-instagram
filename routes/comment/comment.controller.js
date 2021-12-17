@@ -7,18 +7,20 @@ class CommentController {
     const { postId } = req.params;
     const username = req.user.username;
     const userId = req.user.id;
+    const profileUrl = req.user.profileUrl;
 
     try {
       const result = await commentRepository.create(
         userId,
         postId,
         username,
-        content
+        content,
+        profileUrl
       );
       console.log(result);
       return res.sendStatus(201);
     } catch (error) {
-      return res.sendStatus(404); 
+      return res.sendStatus(404);
     }
   }
 
