@@ -7,7 +7,12 @@ const {
 } = require("./myPage.controller");
 
 myPageRouter.get("/:userId", authenticateUser, httpGetPostsByUserId);
-myPageRouter.post("/:userId/upload", authenticateUser, httpUpdateUserProfile);
+myPageRouter.post(
+  "/:userId",
+  authenticateUser,
+  upload.single("profileUrl"),
+  httpUpdateUserProfile
+);
 
 module.exports = myPageRouter;
 
