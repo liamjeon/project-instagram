@@ -5,7 +5,7 @@ class CommentController {
   async htmlCreateComment(req, res, next) {
     const { content } = req.body;
     const { postId } = req.params;
-    const username = "req.user.username";
+    const username = req.user.username;
     const userId = req.user.id;
 
     try {
@@ -18,7 +18,7 @@ class CommentController {
       console.log(result);
       return res.sendStatus(201);
     } catch (error) {
-      return res.sendStatus(404);
+      return res.sendStatus(404); 
     }
   }
 
