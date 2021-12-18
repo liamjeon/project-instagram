@@ -13,7 +13,7 @@ async function httpGetAllPosts(req, res) {
   // (SELECT * FROM likes WHERE userId = ${id} ) AS liked
   // , (SELECT postId FROM likes WHERE likes.userId = ${id})
   const posts = await sequelize.query(
-    `SELECT *, (SELECT COUNT(*) FROM likes WHERE postId = posts.id) AS numOfLikes, (SELECT COUNT(*) FROM comments WHERE postId = posts.id) AS numOfComments FROM posts ORDER BY createdAt DESC`
+    `SELECT *, (SELECT COUNT(*) FROM likes WHERE postId = posts.id) AS numOfLikes, (SELECT COUNT(*) FROM comments WHERE postId = posts.id) AS numOfComments, (SELECT profileUrl FROM users WHERE id = posts.userId) as prorileUrl FROM posts ORDER BY createdAt DESC`
   );
 
   const likedPosts = await sequelize.query(
@@ -107,7 +107,7 @@ async function httpGetOnePost(req, res) {
 
   try {
     const post = await sequelize.query(
-      `SELECT*,(SELECT COUNT(*) FROM likes where postId=${postId} ) AS numOfLikes,(SELECT COUNT(*) FROM comments where postId=${postId}) AS numOfComments FROM posts WHERE id = ${postId}`
+      `SELECT*,(SELECT COUNT(*) FROM likes where postId=${postId} ) AS numOfLikes,(SELECT COUNT(*) FROM comments where postId=${postId}) AS numOfComments, (SELECT profileUrl FROM users WHERE id = posts.userId) as profileUrl FROM posts WHERE id = ${postId}`
     );
 
     const comments = await sequelize.query(
