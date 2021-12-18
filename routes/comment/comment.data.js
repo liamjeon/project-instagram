@@ -3,15 +3,12 @@ const { Comment } = require("../../models/models");
 
 class CommentRepository {
   async create(userId, postId, username, content, profileUrl) {
-    console.log(userId, postId, username, content);
     return Comment.create({
       userId,
       postId,
       content,
       username,
       profileUrl,
-    }).then((result) => {
-      console.log(result);
     });
   }
 

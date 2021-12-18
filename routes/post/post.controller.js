@@ -3,12 +3,27 @@ const { sequelize, Post, User, Comment, Like } = require("../../models/models");
 async function httpGetAllPosts(req, res) {
   // When Passport is ready
   const { id } = req.user;
+  let liked;
 
   const currentUser = await User.findOne({
     where: {
       id: id,
     },
   });
+
+  // let postss = await Post.findAll();
+
+  // postss = postss.map(async (post)=>{
+  //   const numOfLikes = await Like.count({
+  //     where:{
+  //       postId : post.id,
+  //     }
+  //   });
+  //   post.numOfLikes = numOfLikes;
+  //   // console.log(numOfLikes);
+  // });
+
+  
 
   // (SELECT * FROM likes WHERE userId = ${id} ) AS liked
   // , (SELECT postId FROM likes WHERE likes.userId = ${id})
@@ -22,8 +37,10 @@ async function httpGetAllPosts(req, res) {
 
   const likedPostList = likedPosts[0].map((post) => post.postId);
 
+
+
   return res.json({
-    post: posts[0],
+    posts,
     likedPostList,
   });
 }
